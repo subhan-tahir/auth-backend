@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-let dbReport;
+let dbReport = 'test';
 const connectDB = ()=>  {
   try {
     mongoose.set("strictQuery", true);
