@@ -29,7 +29,7 @@ app.use(express.json());
 //get 
 app.get('/',(req,res)=>{
     console.log('hit api')
-    res.send('Hello world' ,dbReport)
+    res.send(`Hello world ${dbReport}`)
 })
 app.post('/employees', async (req, res) => {
     const { email, password, username } = req.body;
