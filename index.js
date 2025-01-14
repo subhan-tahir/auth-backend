@@ -100,7 +100,7 @@ app.post('/login', async (req, res) => {
         console.log('Logged in successfully');
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ success: false, msg: 'An error occurred during login' });
+        res.status(500).json({ success: false, msg: 'An error occurred during login',error:error });
     }
 });
 
