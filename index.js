@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 connectDB();
 //body parser
 // express.json() middleware is used to parse incoming JSON requests.
-app.use(express.json());
+
 
 // Use CORS and specify your Vercel frontend domain
 const corsOptions = {
@@ -22,6 +22,8 @@ const corsOptions = {
   };
 
 app.use(cors(corsOptions));
+
+app.use(express.json());
   
 
 //get 
