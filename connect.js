@@ -16,6 +16,12 @@ const connectDB = ()=>  {
 };
 
 const getDbReport = () => dbReport;
+
+module.exports = {
+  connectDB,
+  getDbReport,
+}
+
 //   {
 // mongoose.connect(process.env.MONGO_URI)
 // .then((res)=>{
@@ -29,7 +35,3 @@ const getDbReport = () => dbReport;
 // }
 // module.exports = connectDB;
 // module.exports = dbReport;
-module.exports = {
-  connectDB,
-  getDbReport,
-}
