@@ -15,13 +15,13 @@ connectDB();
 app.use(express.json());
 
 // Use CORS and specify your Vercel frontend domain
-const corsOptions = {
-    origin: '*', // Allow all origins
-    methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
-    allowedHeaders: 'Content-Type,Authorization', // Allowed headers
-  };
+// const corsOptions = {
+//     origin: '*', // Allow all origins
+//     methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
+//     allowedHeaders: 'Content-Type,Authorization', // Allowed headers
+//   };
 
-app.use(cors(corsOptions));
+app.use(cors());
   
 
 //get 
