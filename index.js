@@ -3,7 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 const connectDB = require('./connect');
-const cors = require("cors");
+const cors = require('cors');
 const EmployeeModel = require('./models/Employee');
 const bcrypt = require('bcrypt')
 const app = express();
@@ -15,7 +15,14 @@ connectDB();
 app.use(express.json());
 
 // Use CORS and specify your Vercel frontend domain
-app.use(cors());
+const corsOptions = {
+    origin: '*', // Allow all origins
+    methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
+    allowedHeaders: 'Content-Type,Authorization', // Allowed headers
+  };
+
+app.use(cors(corsOptions));
+  
 
 //get 
 app.get('/',(req,res)=>{
