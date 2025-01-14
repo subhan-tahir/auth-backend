@@ -14,6 +14,8 @@ const connectDB = ()=>  {
     dbReport = "Database Connection Failed";
   }
 };
+
+const getDbReport = () => dbReport;
 //   {
 // mongoose.connect(process.env.MONGO_URI)
 // .then((res)=>{
@@ -29,5 +31,5 @@ const connectDB = ()=>  {
 // module.exports = dbReport;
 module.exports = {
   connectDB,
-  dbReport,
+  getDbReport,
 }
