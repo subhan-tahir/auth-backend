@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt')
 const app = express();
 const port = process.env.PORT || 3000;
 //connect mongoDB
-let mongoReport = connectDB();
+connectDB();
 //body parser
 // express.json() middleware is used to parse incoming JSON requests.
 
@@ -75,7 +75,6 @@ app.post('/login', async (req, res) => {
     // Extract user credentials from request body
     const { email, password } = req.body;
     console.log({ email, password });
-   return res.json({ report : 'Mongo check'})
 
     try {
         // Find user by email
