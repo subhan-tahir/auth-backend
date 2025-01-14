@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+let dbReport;
 const connectDB = ()=>  {
   try {
     mongoose.set("strictQuery", true);
@@ -7,10 +8,10 @@ const connectDB = ()=>  {
       useUnifiedTopology: true,
     });
     console.log("Database Connected Successfully");
-    return "Database Connected Successfully"
+    dbReport = "Database Connected Successfully";
   } catch (error) {
     console.log("DAtabase error");
-    return "Database Connection Failed"
+    dbReport = "Database Connection Failed";
   }
 };
 //   {
@@ -24,4 +25,9 @@ const connectDB = ()=>  {
 //   return 'Not connected Mongo'
 // })
 // }
-module.exports = connectDB;
+// module.exports = connectDB;
+// module.exports = dbReport;
+module.exports = {
+  connectDB,
+  dbReport,
+}
