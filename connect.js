@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-let dbReport = 'test';
+// let dbReport = 'test';
 const connectDB = async ()=>  {
   try {
     mongoose.set("strictQuery", true);
@@ -15,12 +15,12 @@ const connectDB = async ()=>  {
   }
 };
 
-const getDbReport = () => dbReport;
+// const getDbReport = () => dbReport;
 
-module.exports = {
-  connectDB,
-  getDbReport,
-}
+// module.exports = {
+//   connectDB,
+//   getDbReport,
+// }
 
 //   {
 // mongoose.connect(process.env.MONGO_URI)
@@ -33,5 +33,5 @@ module.exports = {
 //   return 'Not connected Mongo'
 // })
 // }
-// module.exports = connectDB;
+module.exports = connectDB;
 // module.exports = dbReport;
