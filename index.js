@@ -75,7 +75,7 @@ app.post('/login', async (req, res) => {
     // Extract user credentials from request body
     const { email, password } = req.body;
     console.log({ email, password });
-   return res.json({ report : mongoReport})
+   return res.json({ report : 'Mongo check'})
 
     try {
         // Find user by email
