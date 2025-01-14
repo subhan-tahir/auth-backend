@@ -22,7 +22,7 @@ connectDB();
 
 // Use CORS and specify your Vercel frontend domain
 const corsOptions = {
-   origin: 'https://auth-frontened.vercel.app/'  //to be changed later to vercel url
+   origin: 'https://auth-frontened.vercel.app'  //to be changed later to vercel url
  };
 
 app.use(cors(corsOptions));
