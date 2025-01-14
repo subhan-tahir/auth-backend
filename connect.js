@@ -7,8 +7,10 @@ const connectDB = ()=>  {
       useUnifiedTopology: true,
     });
     console.log("Database Connected Successfully");
+    return "Database Connected Successfully"
   } catch (error) {
     console.log("DAtabase error");
+    return "Database Connection Failed"
   }
 };
 //   {
