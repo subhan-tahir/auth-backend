@@ -8,10 +8,10 @@ const connectDB = async ()=>  {
       useUnifiedTopology: true,
     });
     console.log("Database Connected Successfully");
-    dbReport = "Database Connected Successfully";
+    // dbReport = "Database Connected Successfully";
   } catch (error) {
     console.log("DAtabase error");
-    dbReport = "Database Connection Failed";
+    // dbReport = "Database Connection Failed";
   }
 };
 
