@@ -2,14 +2,14 @@
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
-const connectDB = require('./connect');
+const { connectDB, dbReport } = require('./connect');
 const cors = require('cors');
 const EmployeeModel = require('./models/Employee');
 const bcrypt = require('bcrypt')
 const app = express();
 const port = process.env.PORT || 3000;
 //connect mongoDB
-let mondoReport = connectDB();
+connectDB();
 //body parser
 // express.json() middleware is used to parse incoming JSON requests.
 
@@ -29,7 +29,7 @@ app.use(express.json());
 //get 
 app.get('/',(req,res)=>{
     console.log('hit api')
-    res.send('Hello world' ,mondoReport)
+    res.send('Hello world' ,dbReport)
 })
 app.post('/employees', async (req, res) => {
     const { email, password, username } = req.body;
