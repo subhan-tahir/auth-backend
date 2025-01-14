@@ -16,10 +16,8 @@ connectDB();
 
 // Use CORS and specify your Vercel frontend domain
 const corsOptions = {
-    origin: '*', // Allow all origins
-    methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
-    allowedHeaders: 'Content-Type,Authorization', // Allowed headers
-  };
+   origin: 'http://localhost:5173'  //to be changed later to vercel url
+ };
 
 app.use(cors(corsOptions));
 
@@ -74,9 +72,6 @@ app.post('/employees', async (req, res) => {
 
 //login
 app.post('/login', async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
     // Extract user credentials from request body
     const { email, password } = req.body;
     console.log({ email, password });
