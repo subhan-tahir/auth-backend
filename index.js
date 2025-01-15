@@ -16,16 +16,16 @@ app.use(express.json());
 
 // Use CORS and specify your Vercel frontend domain
 
-// CORS configuration
-app.use(
-    cors({
-        origin: ['https://auth-frontened.vercel.app'], // Replace with your actual frontend domain
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        credentials: true,
-    })
-);
-
+// // CORS configuration
+// app.use(
+//     cors({
+//         origin: ['https://auth-frontened.vercel.app'], // Replace with your actual frontend domain
+//         methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//         allowedHeaders: ['Content-Type', 'Authorization'],
+//         credentials: true,
+//     })
+// );
+app.use(cors());
 //get 
 app.get('/',(req,res)=>{
     console.log('hit api')
