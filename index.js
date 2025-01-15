@@ -2,44 +2,32 @@
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
-// const { connectDB, getDbReport } = require('./connect');
 const connectDB = require('./connect');
-const cors = require('cors');
+const cors = require("cors");
 const EmployeeModel = require('./models/Employee');
 const bcrypt = require('bcrypt')
 const app = express();
 const port = process.env.PORT || 3000;
 connectDB();
 
-
-// let report = 'test';
-// connectDB().then(() => {
-//    report = getDbReport();
-// }
 //body parser
 // express.json() middleware is used to parse incoming JSON requests.
-
+app.use(express.json());
 
 // Use CORS and specify your Vercel frontend domain
-app.use(cors());
-
-// const corsOptions = {
-//    origin: 'https://auth-frontened.vercel.app'  //to be changed later to vercel url
-//  };
-
-// app.use(cors(corsOptions));
-
-// app.options('*', cors(corsOptions));
-
-app.use(express.json());
-  
+app.use(cors({
+    origin: 'https://auth-backend-x4gf.vercel.app', // Replace with your Vercel frontend domain
+    methods: ['GET', 'POST'], // Specify allowed HTTP methods
+    credentials: true, // Include credentials if needed (e.g., cookies or HTTP auth)
+}));
 
 //get 
 app.get('/',(req,res)=>{
     console.log('hit api')
-    res.send(`Hello world`)
+    res.send('Hello world')
 })
 app.post('/employees', async (req, res) => {
+    res.send('Hello world')
     const { email, password, username } = req.body;
     //validate input fields
     if(!email || !password || !username){
