@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 connectDB();
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use((req, res, next) => { console.log(`Incoming request: ${req.method} ${req.path}`); console.log(`Origin: ${req.headers.origin}`); next(); });
 // Enhanced CORS configuration
 const allowedOrigins = ['https://auth-frontened.vercel.app']; // Add your frontend's Vercel URL
 const corsOptions = {
