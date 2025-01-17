@@ -28,7 +28,7 @@ app.get('/',(req,res)=>{
 })
 //register 
 app.post('/employees', async (req, res) => {
-    res.send('Hello world')
+    
     const { email, password, username } = req.body;
     //validate input fields
     if(!email || !password || !username){
