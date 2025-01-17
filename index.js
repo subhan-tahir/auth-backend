@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Use CORS and specify your Vercel frontend domain
 app.use(cors({
-    origin: 'https://auth-backend-x4gf.vercel.app', // Replace with your Vercel frontend domain
+    origin: 'https://auth-frontened.vercel.app/', // Replace with your Vercel frontend domain
     methods: ['GET', 'POST'], // Specify allowed HTTP methods
     credentials: true, // Include credentials if needed (e.g., cookies or HTTP auth)
 }));
@@ -26,6 +26,7 @@ app.get('/',(req,res)=>{
     console.log('hit api')
     res.send('Hello world')
 })
+//register 
 app.post('/employees', async (req, res) => {
     res.send('Hello world')
     const { email, password, username } = req.body;
