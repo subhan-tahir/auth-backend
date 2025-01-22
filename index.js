@@ -7,6 +7,7 @@ const cors = require("cors");
 const EmployeeModel = require('./models/Employee');
 const bcrypt = require('bcrypt')
 const app = express();
+const sendEmail = require('./services/emailService')
 const port = process.env.PORT || 3000;
 connectDB();
 
@@ -14,57 +15,69 @@ connectDB();
 // express.json() middleware is used to parse incoming JSON requests.
 app.use(express.json());
 
-// Use CORS and specify your Vercel frontend domain
+// // Use CORS and specify your Vercel frontend domain
+
+//Production
 app.use(cors({
-    origin: 'https://auth-frontened.vercel.app', // Replace with your Vercel frontend domain
-    methods: ['GET', 'POST'], // Specify allowed HTTP methods
-    credentials: true, // Include credentials if needed (e.g., cookies or HTTP auth)
+    origin: ['https://auth-frontened.vercel.app'] ,
+    methods: ['GET', 'POST'], 
+    credentials: true,
 }));
 
+//Development
+// app.use(cors());
+
 //get   
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     console.log('hit api')
     res.send('Hello world')
 })
 //register 
 app.post('/employees', async (req, res) => {
-    
-    const { email, password, username } = req.body;
-    //validate input fields
-    if(!email || !password || !username){
-        res.json({success:true,msg:'All fields are required'});
-        return
+    // Extract data from the request
+    const { username, email, password } = req.body;
+
+    // Validate input fields
+    if (!email || !password || !username) {
+        return res.status(400).json({ success: false, msg: 'All fields are required' }); // Use proper HTTP status codes
     }
+
     try {
         // Check if email already exists
-        let exist = await EmployeeModel.findOne({ email })
+        let exist = await EmployeeModel.findOne({ email });
         if (exist) {
-            res.json({ success: false, msg: 'Email already exist' });
-            return;
+            return res.status(400).json({ success: false, msg: 'Email already exists Please login to continue' });
         }
-         // Hash the password
-         const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
-         console.log('Hashed Password:', hashedPassword);
 
-        //save the user in the database
-        let result = await EmployeeModel.create({ email, password:hashedPassword, username });
-        console.log(result)
-        
-        //send response
-        if (result.username) {
-            res.json({ msg: 'Signed up Succesfully', success: true,data:result });
-            console.log('Signed up Succesfully')
-            return;
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+        console.log('Hashed Password:', hashedPassword);
+
+        // Save the user in the database
+        let result = await EmployeeModel.create({ username, email, password: hashedPassword });
+
+        // Send a welcome email
+        const subject = 'Welcome to my Auth App!';
+        const text = `Hello ${username},\n\nThank you for creating an account!`;
+        const html = `<p>Hello <strong>${username}</strong>,</p><p>Thank you for creating an account!</p>`;
+
+        try {
+            await sendEmail(email, subject, text, html);
+            console.log(`Welcome email sent to ${email}`);
+            console.log(text)
+        } catch (emailError) {
+            console.error(`Failed to send welcome email:`, emailError);
+
         }
-        else {
-            res.json({ msg: 'Not able to sign up', succes: false })
-            return;
-        }
-    }
-    catch (error) {
+
+        // Respond with success
+        return res.status(201).json({ success: true, msg: 'Signed up successfully', data: result });
+
+    } catch (error) {
         console.error('Signup error:', error);
+        return res.status(500).json({ success: false, msg: 'Server error during sign-up' });
     }
-})
+});
 
 
 //login
@@ -76,23 +89,56 @@ app.post('/login', async (req, res) => {
     try {
         // Find user by email
         const user = await EmployeeModel.findOne({ email });
+
         if (!user) {
-            return res.json({ success: false, msg: 'Invalid email or password' });
+            return res.status(401).json({ success: false, msg: "Email does not exist Please create an account." });
         }
 
         // Compare the provided password with the stored hashed password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.json({ success: false, msg: 'Invalid email or password' });
+            return res.status(401).json({ success: false, msg: 'Invalid email or password' });
         }
+
+        // Send a login notification email
+        const subject = `Welcome to ${user.username}! Account Created Successfully`;
+        const text = `
+       
+           Hello ${user.username}  Welcome to my auth-app! We're excited to have you join me.
+            Your account has been successfully created with the email: ${email}.
+            You can now log in to your account and start exploring all the features we have to offer.
+            If you have any questions or need assistance, feel free to reach out to us.
+            Thank you for joining!`
+
+        const html = `  <p>Hello <strong>${user.username}</strong>,</p>
+            <p>Welcome to my <strong>auth-app</strong>! </p>
+            <img src="https://cdn-icons-png.freepik.com/512/8634/8634230.png" alt="Your App Logo" width='200px' height="200px"/>
+            <p>Your account has been successfully created with the email: <strong>${email}</strong>.</p>
+           `
+
+        try {
+            await sendEmail(email, subject, text, html);
+            console.log(`Welcome email sent to ${email}`);
+            console.log(user.username)
+        }
+        catch (emailError) {
+            console.log(console.error(`Failed to send welcome email:`, emailError));
+        }
+
+        
 
         // If the password matches, send a success response
         res.json({ success: true, msg: 'Logged in successfully', data: user });
         console.log('Logged in successfully');
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ success: false, msg: 'An error occurred during login',error:error });
+        res.status(500).json({ success: false, msg: 'An error occurred during login', error: error });
     }
 });
 
 app.listen(port, console.log(`my server is running on localhost:${port}`));
+
+
+
+    // origin: 'https://auth-frontened.vercel.app', // Replace with your Vercel frontend domain
