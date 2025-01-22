@@ -19,7 +19,7 @@ app.use(express.json());
 
 //Production
 app.use(cors({
-    origin: ['*'] ,
+    origin: ['https://auth-backend-x4gf.vercel.app/'] ,
     methods: ['GET', 'POST'], 
     credentials: true,
 }));
