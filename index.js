@@ -8,7 +8,7 @@ const EmployeeModel = require('./models/Employee');
 const bcrypt = require('bcrypt')
 const app = express();
 const sendEmail = require('./services/emailService');
-// const generateAuthToken = require('./utils/authtoken');
+const generateAuthToken = require('./utils/authtoken');
 const port = process.env.PORT || 3000;
 // const generateAuthToken = require('./utils/auth');
 connectDB();
