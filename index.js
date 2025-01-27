@@ -63,7 +63,7 @@ app.post('/employees', async (req, res) => {
         let result = await EmployeeModel.create({ username, email, password: hashedPassword });
 
         // Generate the token
-        // const token = generateAuthToken(result._id);
+        const token = generateAuthToken(result._id);
 
         // Send a welcome email
         const subject = 'Welcome to my Auth App!';
@@ -136,7 +136,7 @@ app.post('/login', async (req, res) => {
 
 
         // Generate authentication token
-        // const token = generateAuthToken();
+        const token = generateAuthToken();
 
         // If the password matches, send a success response
         res.json({ success: true, msg: 'Logged in successfully', data: user, token });
