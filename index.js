@@ -21,7 +21,7 @@ app.use(express.json());
 
 //Production
 app.use(cors({
-    origin: ['https://auth-frontened.vercel.app'] ,
+    origin: ['*'] ,
     methods: ['GET', 'POST'], 
     credentials: true,
 }));
