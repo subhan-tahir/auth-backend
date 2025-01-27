@@ -7,8 +7,10 @@ const cors = require("cors");
 const EmployeeModel = require('./models/Employee');
 const bcrypt = require('bcrypt')
 const app = express();
-const sendEmail = require('./services/emailService')
+const sendEmail = require('./services/emailService');
+const generateAuthToken = require('./utils/authtoken');
 const port = process.env.PORT || 3000;
+// const generateAuthToken = require('./utils/auth');
 connectDB();
 
 //body parser
@@ -56,6 +58,9 @@ app.post('/employees', async (req, res) => {
         // Save the user in the database
         let result = await EmployeeModel.create({ username, email, password: hashedPassword });
 
+        // Generate the token
+        const token = generateAuthToken(result._id);
+
         // Send a welcome email
         const subject = 'Welcome to my Auth App!';
         const text = `Hello ${username},\n\nThank you for creating an account!`;
@@ -71,7 +76,7 @@ app.post('/employees', async (req, res) => {
         }
 
         // Respond with success
-        return res.status(201).json({ success: true, msg: 'Signed up successfully', data: result });
+        return res.status(201).json({ success: true, msg: 'Signed up successfully', data: result, token });
 
     } catch (error) {
         console.error('Signup error:', error);
@@ -125,10 +130,12 @@ app.post('/login', async (req, res) => {
             console.log(console.error(`Failed to send welcome email:`, emailError));
         }
 
-        
+
+        // Generate authentication token
+        const token = generateAuthToken();
 
         // If the password matches, send a success response
-        res.json({ success: true, msg: 'Logged in successfully', data: user });
+        res.json({ success: true, msg: 'Logged in successfully', data: user, token });
         console.log('Logged in successfully');
     }
     catch (error) {
@@ -138,7 +145,3 @@ app.post('/login', async (req, res) => {
 });
 
 app.listen(port, console.log(`my server is running on localhost:${port}`));
-
-
-
-    // origin: 'https://auth-frontened.vercel.app', // Replace with your Vercel frontend domain
