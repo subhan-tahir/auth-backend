@@ -8,7 +8,7 @@ const EmployeeModel = require('./models/Employee');
 const bcrypt = require('bcrypt')
 const app = express();
 const sendEmail = require('./services/emailService');
-const generateAuthToken = require('./utils/authtoken');
+// const generateAuthToken = require('./utils/authtoken');
 const port = process.env.PORT || 3000;
 // const generateAuthToken = require('./utils/auth');
 connectDB();
@@ -23,12 +23,12 @@ app.use(express.json());
 const corsOptions = {
   origin: 'https://auth-frontened.vercel.app', // Your frontend's URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  // allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
   credentials: true,
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors()); // Enable preflight requests for all routes
+app.options('*',cors()); // Enable preflight requests for all routes
 
 //Development
 // app.use(cors());
