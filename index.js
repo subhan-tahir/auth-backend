@@ -24,7 +24,7 @@ const corsOptions = {
   origin: 'https://auth-frontened.vercel.app', // Your frontend's URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed HTTP methods
   // allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-  credentials: true,
+  // credentials: true,
 };
 
 app.use(cors(corsOptions));
